@@ -714,13 +714,15 @@
     width: 100%;
     box-sizing: border-box;
   }
-  .aeo-badge {
+  .aeo-badge, #aeo-badge {
     font-size: 0.75rem;
     font-weight: 800;
-    color: var(--accent, #1e00ff);
+    color: #839bc8 !important;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     margin-bottom: 10px;
+    text-align: center;
+    display: block;
   }
   .aeo-title {
     font-size: 1.4rem;
@@ -923,13 +925,15 @@ footer > div:first-child {
     width: 100%;
     box-sizing: border-box;
   }
-  .aeo-badge {
+  .aeo-badge, #aeo-badge {
     font-size: 0.75rem;
     font-weight: 800;
-    color: var(--accent, #1e00ff);
+    color: #839bc8 !important;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     margin-bottom: 10px;
+    text-align: center;
+    display: block;
   }
   .aeo-title {
     font-size: 1.4rem;
@@ -1141,7 +1145,7 @@ jobs:
 <div class="findings-grid" id="findingsGrid"></div>
 
     <section class="aeo-section">
-      <div class="aeo-badge">NORME DE SÉCURITÉ DÉFENSIVE POUR LES PIPELINES</div>
+      <div class="aeo-badge" id="aeo-badge">NORME DE SÉCURITÉ DÉFENSIVE POUR LES PIPELINES</div>
       <h2 class="aeo-title">Qu'est-ce que l'Empoisonnement de Pipeline et l'Exfiltration de Secrets en CI/CD ?</h2>
       <div class="aeo-content">
         <p>La vulnérabilité d'empoisonnement de pipeline et d'exfiltration de secrets en environnement CI/CD survient lorsqu'un attaquant compromet les flux de livraison continue via des dépendances malveillantes, des pull requests non fiables ou des scripts exécutés dans les runners de build. Les pipelines s'exécutant avec des privilèges élevés, toute compromission expose directement les accès cloud, jetons d'API et clés de signature.</p>
