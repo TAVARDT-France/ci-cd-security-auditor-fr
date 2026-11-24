@@ -7,9 +7,6 @@
 <title>Audit de Sécurité CI/CD &amp; Hardening de la Supply Chain Logicielle | TAVARDT France</title>
 <meta content="Guide technique corporatif d'architecture défensive, immunisation des pipelines (GitHub Actions, GitLab CI), remédiation de pull_request_target et CLI d'audit de supply chain." name="description"/>
 <link href="https://tavardt-france.github.io/ci-cd-security-auditor-fr/" rel="canonical"/>
-
-
-
 <link href="https://tavardt-france.github.io/ci-cd-security-auditor-fr/" hreflang="fr-FR" rel="alternate"/>
 <link href="https://tavardt-france.github.io/ci-cd-security-auditor-fr/" hreflang="x-default" rel="alternate"/>
 <meta content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" name="robots"/>
@@ -965,7 +962,7 @@
 <header class="tavardt-header">
 <div class="tavardt-header-inner">
 <a class="tavardt-brand" href="https://ag.tavardt.com/fr/" rel="noopener" target="_blank">
-<span class="tavardt-logo-text">TAVARDT<span class="tavardt-brand-dot">.</span></span>
+<span class="tavardt-logo-text">TAVARDT</span>
 </a>
 <nav class="tavardt-nav">
 <a class="tavardt-nav-link" href="https://ag.tavardt.com/fr/" rel="noopener" target="_blank">Portail</a>
@@ -981,9 +978,9 @@
 <div class="cli-card">
 <div class="cli-header">
 <div class="cli-dots">
-<span class="dot red"></span>
-<span class="dot yellow"></span>
-<span class="dot green"></span>
+
+
+
 <span class="cli-title">Tests en terminal Local CLI</span>
 </div>
 <button class="btn-copy" id="btn-copy-cli" onclick="copyCliCommand()" type="button">Copier</button>
@@ -1079,9 +1076,6 @@ python audit_ci_cd_security.py .github/workflows/</div>
 <ul class="comp-list">
 <li><span class="cross">✖</span> Déclencheur pull_request_target avec extraction de branches non fiables de forks.</li>
 <li><span class="cross">✖</span> Permissions globales write-all accordées au token par défaut du workflow.</li>
-
-
-
 </ul>
 </div>
 <div class="comp-col hard">
@@ -1089,9 +1083,6 @@ python audit_ci_cd_security.py .github/workflows/</div>
 <ul class="comp-list">
 <li><span class="check">✔</span> Déclencheur pull_request standard avec zéro accès aux secrets de production.</li>
 <li><span class="check">✔</span> Déclaration permissions: contents: read au sommet avec portées minimales par job.</li>
-
-
-
 </ul>
 </div>
 </div>
@@ -1099,21 +1090,7 @@ python audit_ci_cd_security.py .github/workflows/</div>
 </section>
 <section class="faq-section">
 <h2 class="faq-title">Questions Fréquentes sur la Sécurité CI/CD &amp; de la Supply Chain</h2>
-<div class="faq-list">
-<div class="faq-item">
-<button class="faq-btn" onclick="toggleFaq(this)" type="button">
-<span>Pourquoi le déclencheur pull_request_target représente-t-il un risque critique ?</span>
-<span class="faq-icon">+</span>
-</button>
-<div class="faq-body">
-            Le déclencheur pull_request_target s'exécute avec les permissions d'écriture du dépôt parent et l'accès complet aux secrets. S'il extrait le code d'une PR de fork non fiable sans validation stricte, des contributeurs externes peuvent exécuter des scripts bash arbitraires et dérober des identifiants.
-          </div>
-</div>
-
-
-
-
-</div>
+<div class="faq-list"><div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)" type="button">Pourquoi le déclencheur pull_request_target est-il considéré comme un risque critique dans GitHub Actions ?<span class="faq-icon">+</span></button><div class="faq-body">Le déclencheur pull_request_target s'exécute dans le contexte du dépôt parent avec accès complet aux secrets et privilèges d'écriture. Si le workflow extrait le code non fiable du fork sans isolation stricte, des attaquants externes peuvent injecter des commandes malveillantes et exfiltrer les secrets d'entreprise.</div></div><div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)" type="button">Quel est le risque de sécurité d'utiliser des tags mutables (comme @v3 ou @main) dans les actions de tiers ?<span class="faq-icon">+</span></button><div class="faq-body">Les tags Git sont des pointeurs mutables qui peuvent être redéfinis silencieusement vers des commits compromis. Si le compte ou le dépôt du mainteneur est compromis, l'attaquant peut altérer le tag pour distribuer du code malveillant. La défense stricte exige l'épinglage par commit SHA immuable de 40 caractères.</div></div><div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)" type="button">Quel est le principe du moindre privilège appliqué aux tokens d'automatisation (GITHUB_TOKEN) ?<span class="faq-icon">+</span></button><div class="faq-body">Historiquement, le token par défaut héritait de privilèges d'écriture globaux (write-all). Le principe du moindre privilège impose la déclaration de permissions: contents: read au niveau racine du workflow, n'accordant de droits d'écriture qu'aux jobs publiant expressément des paquets ou releases.</div></div><div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)" type="button">Comment éviter l'injection de commandes dans les blocs run: de GitHub Actions ?<span class="faq-icon">+</span></button><div class="faq-body">N'interpolez jamais d'expressions de contexte GitHub (${ github.event.pull_request.title }) directement dans le corps de scripts shell. Passez la valeur via des variables d'environnement (env:) et consommez-la comme variable shell standard ($PR_TITLE), neutralisant tout délimiteur de commande.</div></div><div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)" type="button">Comment auditer la sécurité des pipelines CI/CD de manière déterministe ?<span class="faq-icon">+</span></button><div class="faq-body">Exécutez l'utilitaire officiel audit_ci_cd_security.py directement dans votre terminal ou runner CI/CD. Il réalise une analyse statique déterministe sur les fichiers YAML, validant permissions, épinglage d'actions et assainissement des variables sans requêtes réseau externes.</div></div></div>
 </section>
 <div class="cta-card">
 <h3>Besoin d'un Hardening Professionnel de vos Pipelines CI/CD &amp; de votre Supply Chain ?</h3>
@@ -1127,7 +1104,7 @@ python audit_ci_cd_security.py .github/workflows/</div>
 <footer class="tavardt-footer">
 <div class="tavardt-footer-inner">
 <div class="tavardt-footer-col">
-<div class="tavardt-footer-logo">TAVARDT<span class="tavardt-brand-dot">.</span></div>
+<div class="tavardt-footer-logo">TAVARDT</div>
 <p class="tavardt-footer-mission">Transformer les opérations invisibles en leaders numériques reconnus et sécurisés.</p>
 </div>
 <div class="tavardt-footer-col">
@@ -1345,7 +1322,7 @@ if __name__ == "__main__":
       if (sel) sel.value = tab;
       const box = document.getElementById('code-box');
       if (box && codeTemplates[tab]) {
-        box.innerText = codeTemplates[tab];
+        box.textContent = codeTemplates[tab];
       }
     }
 
