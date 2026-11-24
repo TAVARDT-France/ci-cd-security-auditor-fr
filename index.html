@@ -13,12 +13,12 @@
   <link rel="apple-touch-icon" href="./favicon.ico">
 
   
-  <link rel="alternate" hreflang="pt-BR" href="https://tavardt-brasil.github.io/ci-cd-security-auditor-br/">
+  <link rel="alternate" hreflang="pt-BR" href="https://tavardt-france.github.io/ci-cd-security-auditor-br/">
   <link rel="alternate" hreflang="pt-PT" href="https://tavardt-portugal.github.io/ci-cd-security-auditor-pt/">
   <link rel="alternate" hreflang="en-US" href="https://tavardt-usa.github.io/ci-cd-security-auditor-us/">
   <link rel="alternate" hreflang="en-GB" href="https://tavardt-uk.github.io/ci-cd-security-auditor-uk/">
   <link rel="alternate" hreflang="en-CA" href="https://tavardt-canada.github.io/ci-cd-security-auditor-ca/">
-  <link rel="alternate" hreflang="en-AU" href="https://tavardt-australia.github.io/ci-cd-security-auditor-au/">
+  <link rel="alternate" hreflang="en-AU" href="https://tavardt-france.github.io/ci-cd-security-auditor-au/">
   <link rel="alternate" hreflang="en-NZ" href="https://tavardt-new-zealand.github.io/ci-cd-security-auditor-nz/">
   <link rel="alternate" hreflang="es-ES" href="https://tavardt-espana.github.io/ci-cd-security-auditor-es/">
   <link rel="alternate" hreflang="es-MX" href="https://tavardt-mexico.github.io/ci-cd-security-auditor-mx/">
@@ -208,7 +208,7 @@
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-N6589RSL');</script>
+  })(window,document,'script','dataLayer','GTM-MZTKGRHF');</script>
 
   <style>
     * {
@@ -997,7 +997,7 @@
   </style>
 </head>
 <body>
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6589RSL"
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MZTKGRHF"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <header class="tavardt-header">
@@ -1342,42 +1342,42 @@ if __name__ == "__main__":
 
     const scenariosData = {
       vuln: {
-        badgeClass: 'badge-vuln',
-        badgeText: 'POSTURE STANDARD: VULNÉRABLE À L'EXÉCUTION DE CODE ET AU VOL DE SECRETS',
-        modeTag: 'Configuration Non Sécurisée avec Permissions Globales Excessives',
-        summary: 'Les pipelines standards utilisent souvent des tokens write-all non restreints, déclenchent des jobs privilégiés via pull_request_target sur du code non isolé et consomment des actions tierces non épinglées, ouvrant des vecteurs critiques d'exploitation de la Supply Chain.',
-        findingsCount: '3 Vulnérabilités Actives',
-        findingsCountColor: '#ef4444',
+        badgeClass: "badge-vuln",
+        badgeText: "POSTURE STANDARD : VULNÉRABLE À L'EXÉCUTION DE CODE ET AU VOL DE SECRETS",
+        modeTag: "Configuration Non Sécurisée avec Permissions Globales Excessives",
+        summary: "Les pipelines standards utilisent souvent des tokens write-all non restreints, déclenchent des jobs privilégiés via pull_request_target sur du code non isolé et consomment des actions tierces non épinglées, ouvrant des vecteurs critiques d'exploitation de la Supply Chain.",
+        findingsCount: "3 Vulnérabilités Actives",
+        findingsCountColor: "#ef4444",
         routes: [
-          { path: 'on: pull_request_target avec extraction du fork', status: 'Permet RCE', exposure: 'Exécution de code non fiable avec accès aux secrets corporatifs', risk: 'CRITIQUE', tagClass: 'crit' },
-          { path: 'permissions: write-all', status: 'Permissions Globales', exposure: 'Le token GITHUB_TOKEN par défaut hérite de droits d'écriture illimités', risk: 'ÉLEVÉ', tagClass: 'high' },
-          { path: 'uses: actions/*@v3 (Tags Mutables)', status: 'Non Épinglé', exposure: 'Vulnérable à la compromission de la supply chain via détournement de tag', risk: 'ÉLEVÉ', tagClass: 'high' },
-          { path: 'run: echo ${ secrets.PROD_KEY }', status: 'Fuite de Logs', exposure: 'Secrets de production affichés dans les journaux d'exécution accessibles', risk: 'CRITIQUE', tagClass: 'crit' }
+          { path: "permissions: write-all", status: "Token Permissif", exposure: "Élévation de privilèges automatique", risk: "CRITIQUE", tagClass: "danger" },
+          { path: "on: pull_request_target avec extraction du fork", status: "Permet RCE", exposure: "Exécution de code non fiable avec accès aux secrets", risk: "CRITIQUE", tagClass: "danger" },
+          { path: "actions/checkout@v3 (Non Épinglé par SHA)", status: "Mutation Dépendance", exposure: "Vulnérable aux attaques de type tag-jacking", risk: "ÉLEVÉ", tagClass: "danger" },
+          { path: "run: echo ${ secrets.PROD_KEY }", status: "Fuite de Logs", exposure: "Secrets de production affichés dans les journaux d'exécution", risk: "ÉLEVÉ", tagClass: "danger" }
         ],
         findings: [
-          { text: 'Déclencheur pull_request_target privilégié exécutant du code non fiable avec accès aux secrets.', type: 'warn' },
-          { text: 'Absence de bloc permissions au niveau racine entraînant l'héritage de droits write-all.', type: 'warn' },
-          { text: 'Actions tierces référencées par des tags mutables (@v3, @main) au lieu de commits SHA complets.', type: 'warn' }
+          { text: "Token GITHUB_TOKEN configuré avec l'ensemble des autorisations en écriture au niveau du workflow.", type: "crit" },
+          { text: "Déclencheur pull_request_target extrayant et exécutant le code non vérifié de forks communautaires.", type: "crit" },
+          { text: "Actions tierces GitHub Actions appelées par numéro de version majeure mutable sans hash SHA immuable.", type: "crit" }
         ]
       },
       hard: {
-        badgeClass: 'badge-hard',
-        badgeText: 'HARDENED POSTURE: TAVARDT ZERO TRUST &amp; DEFENSE-IN-DEPTH',
-        modeTag: 'Immutable Workflows with Least Privilege &amp; Egress Filtering',
-        summary: 'The pipeline revokes default permissions via permissions: contents: read, isolates fork executions to safe pull_request events without secrets, pins 100% of actions to 40-character SHAs, and filters runner egress traffic.',
-        findingsCount: '0 Vulnerabilities (Fully Hardened)',
-        findingsCountColor: '#10b981',
+        badgeClass: "badge-hardened",
+        badgeText: "ARCHITECTURE DURCIE : MOINDRE PRIVILÈGE & ZERO TRUST CI/CD",
+        modeTag: "Standard TAVARDT de Durcissement Supply Chain",
+        summary: "L'architecture durcie applique le principe du moindre privilège strict (read-all par défaut), isole l'exécution des forks non fiables, verrouille toutes les actions tierces par hachage SHA-256 complet et interdit formellement l'injection de secrets dans les étapes d'exécution non isolées.",
+        findingsCount: "Conformité Pipeline Totale (0 Alerte)",
+        findingsCountColor: "#10b981",
         routes: [
-          { path: 'on: pull_request (Zero Secret Access)', status: 'Isolated', exposure: 'Fork PR executed in sanitized sandbox without credentials', risk: 'HARDENED', tagClass: 'safe' },
-          { path: 'permissions: contents: read', status: 'Least Privilege', exposure: 'Automation token restricted to code reading only', risk: 'SECURE', tagClass: 'safe' },
-          { path: 'uses: actions/*@[40-char SHA]', status: 'Immutable Pin', exposure: 'Protected against tag hijacking and upstream tampering', risk: 'COMPLIANT', tagClass: 'safe' },
-          { path: 'step-security/harden-runner (Egress)', status: 'Network Filter', exposure: 'Blocks unauthorized outbound connections during build', risk: 'HARDENED', tagClass: 'safe' }
+          { path: "permissions: contents: read", status: "Moindre Privilège", exposure: "Aucun accès en écriture non audité", risk: "SÉCURISÉ", tagClass: "safe" },
+          { path: "on: pull_request (Sans privilèges secrets)", status: "Exécution Isolée", exposure: "Secrets inaccessibles aux contributeurs externes", risk: "IMMUNISÉ", tagClass: "safe" },
+          { path: "actions/checkout@ac59398... (SHA-256)", status: "Immuable", exposure: "Intégrité cryptographique garantie", risk: "CONFORME", tagClass: "safe" },
+          { path: "Secret Masking & OIDC Cloudflare/AWS", status: "Sans Secret Statique", exposure: "Jetons éphémères à courte durée de vie", risk: "OPTIMISÉ", tagClass: "safe" }
         ],
         findings: [
-          { text: 'Standard pull_request trigger running untrusted code in an unprivileged sandbox.', type: 'ok' },
-          { text: 'Declarative permissions: contents: read enforced globally at workflow root.', type: 'ok' },
-          { text: 'External actions cryptographically pinned to immutable 40-character commit SHAs.', type: 'ok' },
-          { text: 'Egress traffic filtered to authorized endpoints preventing data exfiltration.', type: 'ok' }
+          { text: "Permissions restreintes déclarées explicitement par job avec contents: read en lecture seule.", type: "ok" },
+          { text: "Déclencheur pull_request sécurisé sans exposition de contexte privilégié ni de secrets d'environnement.", type: "ok" },
+          { text: "Toutes les actions tierces sont épinglées par hachage SHA de commit complet à 40 caractères.", type: "ok" },
+          { text: "Authentification OIDC fédérée mise en place, éliminant les secrets statiques à longue durée.", type: "ok" }
         ]
       }
     };
